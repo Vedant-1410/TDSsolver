@@ -31,8 +31,8 @@ app = Flask(__name__)
 
 # Initialize OpenAI client
 client = OpenAI(
-    api_key=os.getenv("GROQ_API_KEY"),
-    base_url="https://api.groq.com/openai/v1",
+    api_key="eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IjI0ZjEwMDA2MjBAZHMuc3R1ZHkuaWl0bS5hYy5pbiJ9.F6LcPFXyMTxJe9uuxHko72taaPevFj8r4kY4TyGMgYg"),
+    base_url="https://aiproxy.sanand.workers.dev/openai/v1",
 )
 
 def save_upload_file_temp(file_storage) -> Optional[str]:
