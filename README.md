@@ -1,5 +1,5 @@
 # TDSsolver
-Project 2 for IITM BS degree TSD course
+Project 2 for IITM BS degree TDS course
 
 
 Name - Vedant Jindal 
