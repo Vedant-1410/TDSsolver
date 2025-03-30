@@ -31,7 +31,7 @@ app = Flask(__name__)
 
 # Initialize OpenAI client
 client = OpenAI(
-    api_key="eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IjI0ZjEwMDA2MjBAZHMuc3R1ZHkuaWl0bS5hYy5pbiJ9.F6LcPFXyMTxJe9uuxHko72taaPevFj8r4kY4TyGMgYg"),
+    api_key=os.getenv("API_KEY"),
     base_url="https://aiproxy.sanand.workers.dev/openai/v1",
 )
 
