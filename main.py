@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, send_file
+from flask import render_template, send_from_directory
 from typing import Optional, Dict, Any
 import os
 import json
@@ -31,8 +32,8 @@ app = Flask(__name__)
 
 # Initialize OpenAI client
 client = OpenAI(
-    api_key=os.getenv("API_KEY"),
-    base_url="https://aiproxy.sanand.workers.dev/openai/v1",
+    api_key=os.getenv("GROQ_API_KEY"),
+    base_url=os.getenv("base_url"),
 )
 
 def save_upload_file_temp(file_storage) -> Optional[str]:
@@ -66,7 +67,7 @@ def download_file_from_url(url: str) -> Optional[str]:
         logger.error(f"Error downloading file: {str(e)}")
         return None
 
-def get_vscode_s_flag_output(params: Dict = None) -> str:
+def get_vscode_s_flag_output():
     try:
         return """Version:          Code 1.96.2 (fabdb6a30b49f79a7aba0f2ad9df9b399473380f, 2024-12-19T10:22:47.216Z)
 OS Version:       Windows_NT x64 10.0.22631
@@ -1778,7 +1779,7 @@ tools = [
         "type": "function",
         "function": {
             "name": "get_vscode_s_flag_output",
-            "description": "Get the output of running 'code -s' command in Visual Studio Code",
+            "description": "What is the output of code -s?",
             "parameters": {
                 "type": "object",
                 "properties": {},
@@ -2324,6 +2325,9 @@ def process_question(question: str, file_path: Optional[str] = None) -> str:
                 else:
                     return "Error: No file uploaded or URL provided."
 
+        if "code -s" in question.lower() and "output" in question.lower():
+                    return get_vscode_s_flag_output()
+
         if "convert" in question.lower() and "json" in question.lower() and ("key=value" in question.lower() or "key-value" in question.lower() or "key = value" in question.lower()):
             url_match = re.search(r'(https?://\S+)', question)
             file_mention_match = re.search(r'download\s+([^\s,]+)', question, re.IGNORECASE)
@@ -2768,4 +2772,3 @@ def ui():
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=8000)
-

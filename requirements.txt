@@ -9,4 +9,4 @@ requests
 python-multipart
 uvicorn
 uv
-gunicorn==21.2.0
+gunicorn
